@@ -20,7 +20,7 @@ const HeaderCartButton = (props) => {
     if (items.length === 0) return;
     setBtnIsAnimated(true);
 
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       setBtnIsAnimated(false);
     }, 300);
 
