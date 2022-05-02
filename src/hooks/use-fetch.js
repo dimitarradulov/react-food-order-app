@@ -3,8 +3,9 @@ import { useState, useCallback } from 'react';
 const useFetch = () => {
   const [errorOccured, setErrorOccured] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [didSubmit, setDidSubmit] = useState(false);
 
-  const httpRequest = useCallback(async (configObj, applyDataFn) => {
+  const httpRequest = useCallback(async (configObj, applyDataFn = null) => {
     try {
       setIsLoading(true);
       setErrorOccured(null);
@@ -24,11 +25,12 @@ const useFetch = () => {
 
       const data = await response.json();
 
-      applyDataFn(data);
+      applyDataFn && applyDataFn(data);
     } catch (err) {
       setErrorOccured(err.message);
     } finally {
       setIsLoading(false);
+      setDidSubmit(true);
     }
   }, []);
 
@@ -36,6 +38,7 @@ const useFetch = () => {
     errorOccured,
     isLoading,
     httpRequest,
+    didSubmit,
   };
 };
 
